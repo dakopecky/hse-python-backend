@@ -12,7 +12,8 @@ make docker-run
 
 #### To run tests locally:
 ```bash
-make run
+make server
+make test
 ```
 > **P.S.**  
 > You can also see the test report in GitHub CI

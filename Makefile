@@ -15,10 +15,13 @@ docker-run: docker
 install-deps:
 	poetry install
 
-server: install-deps
+detached-server: install-deps
 	poetry run uvicorn main:app --reload --host "$(HOST)" --port "$(PORT)" &
+
+server: install-deps
+	poetry run uvicorn main:app --reload --host "$(HOST)" --port "$(PORT)"
 
 test:
 	poetry run pytest tests/
 
-run: server test
+run: detached-server test
