@@ -1,9 +1,14 @@
 import json
 import math
+from typing import Callable, Awaitable, Dict, Any
 from urllib.parse import parse_qs
 
+# Типы для ASGI
+ASGISend = Callable[[Dict[str, Any]], Awaitable[None]]
+ASGIReceive = Callable[[], Awaitable[Dict[str, Any]]]
+ASGIScope = Dict[str, Any]
 
-async def app(scope, receive, send):
+async def app(scope: ASGIScope, receive: ASGIReceive, send: ASGISend) -> None:
     if scope['type'] == 'http':
         method = scope['method']
         path = scope['path']
@@ -17,8 +22,7 @@ async def app(scope, receive, send):
         else:
             await send_404(send)
 
-
-async def handle_factorial(scope, receive, send):
+async def handle_factorial(scope: ASGIScope, receive: ASGIReceive, send: ASGISend) -> None:
     query_string = scope['query_string'].decode()
     query_params = parse_qs(query_string)
 
@@ -38,8 +42,7 @@ async def handle_factorial(scope, receive, send):
     except Exception as e:
         await send_500(send, str(e))
 
-
-async def handle_fibonacci(scope, receive, send):
+async def handle_fibonacci(scope: ASGIScope, receive: ASGIReceive, send: ASGISend) -> None:
     path = scope['path']
     try:
         n = int(path.split('/')[-1])
@@ -57,8 +60,7 @@ async def handle_fibonacci(scope, receive, send):
     except Exception as e:
         await send_500(send, str(e))
 
-
-async def handle_mean(scope, receive, send):
+async def handle_mean(scope: ASGIScope, receive: ASGIReceive, send: ASGISend) -> None:
     body = await receive_body(receive)
 
     try:
@@ -77,8 +79,7 @@ async def handle_mean(scope, receive, send):
     except Exception as e:
         await send_500(send, str(e))
 
-
-async def send_json(send, data):
+async def send_json(send: ASGISend, data: Dict[str, Any]) -> None:
     await send({
         'type': 'http.response.start',
         'status': 200,
@@ -89,8 +90,7 @@ async def send_json(send, data):
         'body': json.dumps(data).encode('utf-8')
     })
 
-
-async def send_400(send, message):
+async def send_400(send: ASGISend, message: str) -> None:
     await send({
         'type': 'http.response.start',
         'status': 400,
@@ -101,8 +101,7 @@ async def send_400(send, message):
         'body': json.dumps({"error": message}).encode('utf-8')
     })
 
-
-async def send_404(send):
+async def send_404(send: ASGISend) -> None:
     await send({
         'type': 'http.response.start',
         'status': 404,
@@ -113,8 +112,7 @@ async def send_404(send):
         'body': json.dumps({"error": "Not Found"}).encode('utf-8')
     })
 
-
-async def send_422(send, message):
+async def send_422(send: ASGISend, message: str) -> None:
     await send({
         'type': 'http.response.start',
         'status': 422,
@@ -125,8 +123,7 @@ async def send_422(send, message):
         'body': json.dumps({"error": message}).encode('utf-8')
     })
 
-
-async def send_500(send, message):
+async def send_500(send: ASGISend, message: str) -> None:
     await send({
         'type': 'http.response.start',
         'status': 500,
@@ -137,8 +134,7 @@ async def send_500(send, message):
         'body': json.dumps({"error": message}).encode('utf-8')
     })
 
-
-async def receive_body(receive):
+async def receive_body(receive: ASGIReceive) -> bytes:
     body = b''
     while True:
         message = await receive()
