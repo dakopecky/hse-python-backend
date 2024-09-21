@@ -7,12 +7,12 @@
 ## HW#1
 #### To run tests in docker:
 ```bash
-    make docker-run
+make docker-run
 ```
 
 #### To run tests locally:
 ```bash
-    make run
+make run
 ```
 > **P.S.**  
 > You can also see the test report in GitHub CI
