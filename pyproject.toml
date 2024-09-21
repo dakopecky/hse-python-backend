@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "hse-python-backend-course"
+version = "0.1.0"
+description = ""
+authors = ["Daniel Kopecky <danielkopecky@protonmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+uvicorn = "^0.30.6"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.3"
+requests = "^2.32.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
