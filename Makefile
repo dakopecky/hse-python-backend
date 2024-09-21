@@ -1,13 +1,16 @@
-.PHONY: docker install-deps server test
+.PHONY: docker docker-run install-deps server test
 
 PORT       ?= 8000
 HOST       ?= localhost
-DOCKER_TAG ?= ghcr.io/dakopecky/REPOSITORY_NAME
+DOCKER_TAG ?= ghcr.io/dakopecky/hse-python-backend/math-api:latest
 
 docker:
 	docker build \
-	-t math-api \
+	-t $(DOCKER_TAG) \
 	.
+
+docker-run: docker
+	docker run --rm --name math-api "$(DOCKER_TAG)"
 
 install-deps:
 	poetry install

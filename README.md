@@ -14,3 +14,5 @@
 ```bash
     make run
 ```
+> **P.S.**  
+> You can also see the test report in GitHub CI
