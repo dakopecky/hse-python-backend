@@ -3,3 +3,14 @@
 
 ## ITMO Student
 ### Daniel Kopecky (`282306`)
+
+## HW#1
+#### To run tests in docker:
+```bash
+    make docker-run
+```
+
+#### To run tests locally:
+```bash
+    make run
+```
