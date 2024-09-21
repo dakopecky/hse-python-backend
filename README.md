@@ -3,3 +3,6 @@
 
 ## ITMO Student
 ### Daniel Kopecky (`282306`)
+
+### HWs:
+* [`HW#1`](https://github.com/dakopecky/hse-python-backend/tree/hw1)
