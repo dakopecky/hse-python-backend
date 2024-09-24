@@ -1,0 +1,26 @@
+name: Docker PyTest
+
+on:
+  push:
+    branches:
+      - 'hw1'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  pytest-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Docker image
+        run: make docker
+
+      - name: Run tests in Docker container
+        run: make docker-run
