@@ -1,0 +1,40 @@
+x-restart-mode: &restart-mode
+  unless-stopped
+
+services:
+  shop_api:
+    image: localhost/shop-api:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PORT: "8000"
+    ports:
+      - "8000:8000"
+    restart: *restart-mode
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    depends_on:
+      - shop_api
+    restart: *restart-mode
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - shop_api
+      - prometheus
+    restart: *restart-mode
+
+volumes:
+  prometheus_data:
+  grafana_data:
