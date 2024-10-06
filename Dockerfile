@@ -13,7 +13,6 @@ COPY shop_api ./shop_api
 COPY tests ./tests
 RUN poetry install
 
-ARG HOST
 ARG PORT
 EXPOSE $PORT
 
