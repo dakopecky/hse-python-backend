@@ -23,4 +23,4 @@ server: install-deps
 	poetry run uvicorn shop_api.main:app --reload --host "$(HOST)" --port "$(PORT)"
 
 test:
-	poetry run pytest tests/
+	poetry run pytest -vv tests/
