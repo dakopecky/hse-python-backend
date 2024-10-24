@@ -6,4 +6,4 @@
 
 ### HWs:
 * [`HW#1`](https://github.com/dakopecky/hse-python-backend/tree/hw1)
-* [`HW#2`](https://github.com/dakopecky/hse-python-backend/tree/hw2)
+* [`HW#2-3`](https://github.com/dakopecky/hse-python-backend/tree/hw2)
